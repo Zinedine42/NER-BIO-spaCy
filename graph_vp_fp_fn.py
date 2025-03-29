@@ -35,6 +35,11 @@ vp_counts = [global_counts[m]["VP"] for m in methods]
 fp_counts = [global_counts[m]["FP"] for m in methods]
 fn_counts = [global_counts[m]["FN"] for m in methods]
 
+print("Méthodes détectées :", methods)
+print("VP :", vp_counts)
+print("FP :", fp_counts)
+print("FN :", fn_counts)
+
 plt.figure(figsize=(10, 6))
 plt.bar(x - width, vp_counts, width, label="Vrais Positifs", color="blue")
 plt.bar(x, fp_counts, width, label="Faux Positifs", color="red")
