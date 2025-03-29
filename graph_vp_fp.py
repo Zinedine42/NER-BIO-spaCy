@@ -41,7 +41,7 @@ for author in os.listdir(NER_DIR):
         if not ref_file.endswith(".json"):
             continue
 
-        base_name = ref_file.replace(".json", "")
+        base_name = ref_file.replace(\"_PP.json", \"")
         ref_data = load_json(os.path.join(ref_dir, ref_file)).get("entities", [])
 
         # Kraken
