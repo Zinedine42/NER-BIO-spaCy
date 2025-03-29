@@ -86,5 +86,10 @@ plt.title("Comparaison REN : VP / FP / FN par méthode OCR")
 plt.legend()
 plt.tight_layout()
 
+print("Méthodes trouvées :", methods)
+print("VP :", vp_vals)
+print("FP :", fp_vals)
+print("FN :", fn_vals)
+
 plt.savefig(os.path.join(CHART_DIR, "vp_fp_fn_barplot.png"))
 plt.close()
