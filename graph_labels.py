@@ -7,7 +7,7 @@ NER_DIR = "NER-OUTPUT"
 OUTPUT_DIR = "label_distribution"
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
-# Détecter la version du fichier à partir du chemin
+# bonne version du fichier
 def detect_version(path):
     path = path.lower()
     if "ref" in path:
@@ -19,7 +19,7 @@ def detect_version(path):
     else:
         return "Autre"
 
-# Dictionnaire pour stocker les catégories par version
+# Stocker par version
 data_by_version = defaultdict(list)
 
 # Parcours des fichiers .json
@@ -35,10 +35,8 @@ for root, _, files in os.walk(NER_DIR):
                         label = ent.get("category")
                         if label:
                             data_by_version[version].append(label)
-            except Exception as e:
-                print(f"Erreur avec le fichier {file_path} : {e}")
 
-# Générer un camembert pour chaque version
+# Creer le camembert par version
 for version, labels in data_by_version.items():
     counter = Counter(labels)
     labels_list = list(counter.keys())
