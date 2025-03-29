@@ -2,12 +2,14 @@ import os
 import json
 import matplotlib.pyplot as plt
 from collections import defaultdict
+import numpy as np
 
 # Fichier d’entrée
 INPUT_JSON = "NER-COMPARISON/comparison_results.json"
 OUTPUT_DIR = "comparison_charts"
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
+# Récupérer les données globales par méthode
 global_counts = defaultdict(lambda: {"VP": 0, "FP": 0, "FN": 0})
 
 with open(INPUT_JSON, "r", encoding="utf-8") as f:
@@ -26,17 +28,17 @@ with open(INPUT_JSON, "r", encoding="utf-8") as f:
 
 # Graphique
 methods = list(global_counts.keys())
+x = np.arange(len(methods))  # position des groupes
+width = 0.25
+
 vp_counts = [global_counts[m]["VP"] for m in methods]
 fp_counts = [global_counts[m]["FP"] for m in methods]
 fn_counts = [global_counts[m]["FN"] for m in methods]
 
-x = range(len(methods))
-width = 0.25
-
 plt.figure(figsize=(10, 6))
-plt.bar([i - width for i in x], vp_counts, width, label="Vrais Positifs", color="blue")
-plt.bar(x, fp_counts, width, label="Faux Positifs", color="violet")
-plt.bar([i + width for i in x], fn_counts, width, label="Faux Négatifs", color="orange")
+plt.bar(x - width, vp_counts, width, label="Vrais Positifs", color="blue")
+plt.bar(x, fp_counts, width, label="Faux Positifs", color="red")
+plt.bar(x + width, fn_counts, width, label="Faux Négatifs", color="orange")
 
 plt.xticks(x, methods)
 plt.ylabel("Nombre d'entités")
