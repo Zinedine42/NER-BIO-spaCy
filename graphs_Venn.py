@@ -57,16 +57,18 @@ with open(CSV_PATH, 'w', newline='', encoding='utf-8') as csvfile:
 
                     # Création du diagramme
                     plt.figure(figsize=(6,6))
-                    venn2([ner_words, pos_words], set_labels=("Entités Nommées", "PROPN"))
                     venn = venn2([ner_words, pos_words], set_labels=("Entités Nommées", "PROPN"))
-                    # Remmetre l'affichage droit
-                    label_propn = venn.get_label_by_id("01")
-                    label_inter = venn.get_label_by_id("11")
-                    if label_propn and label_inter:
-                        text_propn = label_propn.get_text()
-                        text_inter = label_inter.get_text()
-                        label_propn.set_text(text_inter)
-                        label_inter.set_text(text_propn)
+
+                    # Inversion visuelle entre intersection et PROPN (affichage uniquement)
+                    if venn:
+                        label_propn = venn.get_label_by_id("01")
+                        label_inter = venn.get_label_by_id("11")
+                    
+                        if label_propn and label_inter:
+                            temp = label_propn.get_text()
+                            label_propn.set_text(label_inter.get_text())
+                            label_inter.set_text(temp)
+
                     plt.title(base_name.replace(".json", ""))
 
                     # Sauvegarde
