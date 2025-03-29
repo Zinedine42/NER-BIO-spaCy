@@ -22,12 +22,12 @@ def extract_pos_words(pos_path):
         data = json.load(f)
         return {token["text"].lower() for token in data if token.get("pos") == "PROPN"}
 
-# Fichier CSV pour les statistiques
+# Fichier pour les statistiques
 with open(CSV_PATH, 'w', newline='', encoding='utf-8') as csvfile:
     writer = csv.writer(csvfile)
     writer.writerow(["Fichier", "Taille REN", "Taille PROPN", "Intersection"])
 
-    # Associer les NER et les POS
+    # NER + POS
     for root, _, files in os.walk(POS_DIR):
         for file in files:
             if file.endswith("_PROPN.json"):
@@ -59,7 +59,7 @@ with open(CSV_PATH, 'w', newline='', encoding='utf-8') as csvfile:
                     plt.figure(figsize=(6,6))
                     venn = venn2([ner_words, pos_words], set_labels=("Entités Nommées", "PROPN"))
 
-                    # Inversion visuelle entre intersection et PROPN (affichage uniquement)
+                    # Inversion visuelle entre intersection et PROPN
                     if venn:
                         label_propn = venn.get_label_by_id("01")
                         label_inter = venn.get_label_by_id("11")
